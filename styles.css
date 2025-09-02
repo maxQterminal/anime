@@ -76,9 +76,16 @@ body::after {
 .tab:hover { color: #fff; background: rgba(255,255,255,0.06); }
 
 /* Show/hide panels based on radio state */
-.panel { display: none; }
-#tab-home:checked ~ .panel-home { display: block; }
-#tab-anime:checked ~ .panel-anime { display: grid; }
+.panel { display: none !important; }
+#tab-home:checked ~ .panel-home { display: block !important; }
+#tab-anime:checked ~ .panel-anime { display: grid !important; }
+
+/* highlight active tab label */
+#tab-home:checked ~ .site-header .tabs label[for="tab-home"],
+#tab-anime:checked ~ .site-header .tabs label[for="tab-anime"] {
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+}
 
 /* Home Panel */
 .panel-home { min-height: calc(100vh - 56px); position: relative; }

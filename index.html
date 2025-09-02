@@ -9,19 +9,16 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <!-- Tabs: CSS-only via radio inputs -->
-    <input type="radio" name="tab" id="tab-home" class="tab-input" checked aria-hidden="true" />
-    <input type="radio" name="tab" id="tab-anime" class="tab-input" aria-hidden="true" />
-
+    <!-- Tabs: Class-based toggle for cross-browser compatibility -->
     <header class="site-header">
-      <nav class="tabs" aria-label="Primary">
-        <label for="tab-home" class="tab">Home</label>
-        <label for="tab-anime" class="tab">My Anime</label>
+      <nav class="tabs" aria-label="Primary" role="tablist">
+        <button type="button" class="tab is-active" data-target="#home-panel" role="tab" aria-selected="true">Home</button>
+        <button type="button" class="tab" data-target="#anime-panel" role="tab" aria-selected="false">My Anime</button>
       </nav>
     </header>
 
     <!-- HOME PANEL -->
-    <section class="panel panel-home" aria-labelledby="tab-home-label">
+    <section id="home-panel" class="panel panel-home active" aria-labelledby="tab-home-label" role="tabpanel">
       <div class="hero">
         <div class="gif-circle">
           <!-- EDIT PATH: Replace src with your dancing GIF path, e.g. ./media/dance.gif -->
@@ -44,7 +41,7 @@
     </section>
 
     <!-- MY ANIME PANEL -->
-    <section class="panel panel-anime" aria-labelledby="tab-anime-label">
+    <section id="anime-panel" class="panel panel-anime" aria-labelledby="tab-anime-label" role="tabpanel">
       <aside class="sidebar" aria-label="Anime filters">
         <details open>
           <summary>Genres</summary>
@@ -96,8 +93,35 @@
         </ul>
       </div>
     </section>
+    <script>
+      // Class-based tab toggle (no radios)
+      (function () {
+        function selectTab(button) {
+          var target = button.getAttribute('data-target');
+          var panel = target ? document.querySelector(target) : null;
+          if (!panel) return;
+          // Tabs
+          document.querySelectorAll('.tabs .tab').forEach(function (t) {
+            t.classList.remove('is-active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          button.classList.add('is-active');
+          button.setAttribute('aria-selected', 'true');
+          // Panels
+          document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
+          panel.classList.add('active');
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+          document.querySelectorAll('.tabs .tab').forEach(function (btn) {
+            btn.addEventListener('click', function () { selectTab(btn); });
+          });
+          // Ensure initial state
+          var initial = document.querySelector('.tabs .tab.is-active');
+          if (initial) selectTab(initial);
+        });
+      })();
+    </script>
   </body>
   </html>
-
 
 

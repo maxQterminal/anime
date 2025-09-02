@@ -75,9 +75,9 @@ body::after {
 .tab:hover, .tab.is-active { color: #fff; background: rgba(255,255,255,0.08); }
 
 /* Show/hide panels based on radio state */
-.panel { display: none; }
-.panel.active { display: block; }
-.panel.panel-anime.active { display: grid; }
+.panel { display: none !important; }
+.panel.active { display: block !important; }
+.panel.panel-anime.active { display: grid !important; }
 
 /* Home Panel */
 .panel-home { min-height: calc(100vh - 56px); position: relative; }

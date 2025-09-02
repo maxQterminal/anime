@@ -69,23 +69,15 @@ body::after {
 }
 
 /* Tabs */
-.tab-input { position: absolute; left: -9999px; }
 .site-header { position: sticky; top: 0; z-index: 10; background: linear-gradient(180deg, rgba(0,0,0,0.9), rgba(0,0,0,0.6)); backdrop-filter: blur(6px); }
 .tabs { display: flex; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--border); }
-.tab { color: var(--muted); cursor: pointer; padding: 8px 12px; border-radius: 8px; transition: color .2s ease, background .2s ease; }
-.tab:hover { color: #fff; background: rgba(255,255,255,0.06); }
+.tab { color: var(--muted); cursor: pointer; padding: 8px 12px; border-radius: 8px; transition: color .2s ease, background .2s ease; background: transparent; border: none; font: inherit; }
+.tab:hover, .tab.is-active { color: #fff; background: rgba(255,255,255,0.08); }
 
 /* Show/hide panels based on radio state */
-.panel { display: none !important; }
-#tab-home:checked ~ .panel-home { display: block !important; }
-#tab-anime:checked ~ .panel-anime { display: grid !important; }
-
-/* highlight active tab label */
-#tab-home:checked ~ .site-header .tabs label[for="tab-home"],
-#tab-anime:checked ~ .site-header .tabs label[for="tab-anime"] {
-  color: #fff;
-  background: rgba(255,255,255,0.08);
-}
+.panel { display: none; }
+.panel.active { display: block; }
+.panel.panel-anime.active { display: grid; }
 
 /* Home Panel */
 .panel-home { min-height: calc(100vh - 56px); position: relative; }
@@ -153,8 +145,5 @@ body::after {
 @media (prefers-reduced-motion: reduce) {
   body { animation: none; }
 }
-
-
-
 
 

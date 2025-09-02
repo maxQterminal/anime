@@ -99,7 +99,12 @@
         function selectTab(button) {
           var target = button.getAttribute('data-target');
           var panel = target ? document.querySelector(target) : null;
-          if (!panel) return;
+          if (!panel) {
+            console.log('Panel not found:', target);
+            return;
+          }
+          console.log('Switching to panel:', target);
+          
           // Tabs
           document.querySelectorAll('.tabs .tab').forEach(function (t) {
             t.classList.remove('is-active');
@@ -107,17 +112,40 @@
           });
           button.classList.add('is-active');
           button.setAttribute('aria-selected', 'true');
+          
           // Panels
-          document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
-          panel.classList.add('active');
-        }
-        document.addEventListener('DOMContentLoaded', function () {
-          document.querySelectorAll('.tabs .tab').forEach(function (btn) {
-            btn.addEventListener('click', function () { selectTab(btn); });
+          document.querySelectorAll('.panel').forEach(function (p) { 
+            p.classList.remove('active'); 
+            console.log('Hiding panel:', p.id);
           });
+          panel.classList.add('active');
+          console.log('Showing panel:', panel.id);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          console.log('DOM loaded, setting up tabs');
+          
+          // Hide all panels initially
+          document.querySelectorAll('.panel').forEach(function (p) { 
+            p.classList.remove('active'); 
+            console.log('Initial hide:', p.id);
+          });
+          
+          document.querySelectorAll('.tabs .tab').forEach(function (btn) {
+            btn.addEventListener('click', function () { 
+              console.log('Tab clicked:', btn.textContent);
+              selectTab(btn); 
+            });
+          });
+          
           // Ensure initial state
           var initial = document.querySelector('.tabs .tab.is-active');
-          if (initial) selectTab(initial);
+          if (initial) {
+            console.log('Initial tab found:', initial.textContent);
+            selectTab(initial);
+          } else {
+            console.log('No initial tab found');
+          }
         });
       })();
     </script>
